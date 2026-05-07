@@ -171,7 +171,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   rb: {fileID: 3439342223643540046}
   col: {fileID: 8930299594878848522}
-  render: {fileID: 4414798223838537432}
 --- !u!54 &3439342223643540046
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -214,7 +213,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

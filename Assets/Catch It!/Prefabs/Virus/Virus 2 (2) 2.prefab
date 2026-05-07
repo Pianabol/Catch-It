@@ -105,7 +105,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   rb: {fileID: 6864949955546012820}
   col: {fileID: 5310104519016602353}
-  render: {fileID: 6320645910782275753}
 --- !u!65 &5310104519016602353
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -121,7 +120,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
