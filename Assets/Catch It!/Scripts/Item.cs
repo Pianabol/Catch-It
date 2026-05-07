@@ -5,8 +5,13 @@ public class Item : MonoBehaviour
    [Header(" Elements")]
    [SerializeField] private Rigidbody rb;
    [SerializeField] private Collider col;
-   [SerializeField] private Renderer render;
+   
+   private Renderer[] allRenderers;
 
+    void Awake()
+    {
+        allRenderers = GetComponentsInChildren<Renderer>();
+    }
     void Start()
     {
         
@@ -20,7 +25,10 @@ public class Item : MonoBehaviour
 
     public void DisableShadows()
     {
-    
+        foreach(Renderer r in allRenderers)
+        {
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
     }
 
     public void DisablePhysics()
