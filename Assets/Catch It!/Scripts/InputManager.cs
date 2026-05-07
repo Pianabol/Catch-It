@@ -7,18 +7,15 @@ public class InputManager : MonoBehaviour
 
     [Header(" Settings ")]
     private Item currentItem;
-
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetMouseButtonDown(0))
         {
-            HandleDrag();
-        }
-        
+            HandleClick();
+        }   
     }
 
-    private void HandleDrag()
+    private void HandleClick()
     {
         Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 30);
         if(hit.collider == null)

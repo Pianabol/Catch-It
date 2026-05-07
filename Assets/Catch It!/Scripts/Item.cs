@@ -5,6 +5,8 @@ public class Item : MonoBehaviour
    [Header(" Elements")]
    [SerializeField] private Rigidbody rb;
    [SerializeField] private Collider col;
+   [SerializeField] private Renderer render;
+
     void Start()
     {
         
@@ -26,4 +28,5 @@ public class Item : MonoBehaviour
         rb.isKinematic = true;
         col.enabled = false;
     }
+
 }
