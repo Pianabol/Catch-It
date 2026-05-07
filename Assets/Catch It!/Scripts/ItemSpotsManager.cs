@@ -3,13 +3,12 @@ using System;
 
 public class ItemSpotsManager : MonoBehaviour
 {
-    [Header(" Eleman ")]
-    [SerializeField] private Transform itemSpot;
+    [Header(" Elemanlar ")]
+    [SerializeField] private Transform itemSpot; 
+    [SerializeField] private GameObject clickEffectPrefab; 
 
     [Header(" Settings")]
-    [SerializeField] private Vector3 itemLocalPosition;
-    [SerializeField] private Vector3 itemLocalScale;
-
+    [SerializeField] private float animationDuration = 0.4f;
 
     private void Awake()
     {
@@ -21,18 +20,16 @@ public class ItemSpotsManager : MonoBehaviour
         InputManager.itemClicked -= HandleItemClicked;
     }
 
+   
     private void HandleItemClicked(Item item)
     {
-        // Handle item click logic here
-        // ıvır zıvır.
-
-        item.transform.SetParent(itemSpot);
-        item.transform.localPosition = itemLocalPosition;
-        item.transform.localScale = itemLocalScale;
-        
-        item.DisableShadows();
         item.DisablePhysics();
-    }
 
-     
+        if (clickEffectPrefab != null)
+        {
+            Instantiate(clickEffectPrefab, item.transform.position, Quaternion.identity);
+        }
+
+        item.ReturnToPool();
+    }
 }

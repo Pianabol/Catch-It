@@ -10,7 +10,7 @@ public class ItemPlacer : MonoBehaviour
 
     [Header(" Settings ")]
     [SerializeField] private BoxCollider spawnArea;
-    [SerializeField] private float levelDuration = 90f; // Saniye cinsinden bölüm süresi (1.5 dk = 90s)
+    [SerializeField] private float levelDuration = 90f;
 
     // Çıkacak tüm virüsleri tutacağımız geçici liste
     private List<Item> itemsToSpawnList = new List<Item>();
@@ -49,8 +49,6 @@ public class ItemPlacer : MonoBehaviour
     {
         if (itemsToSpawnList.Count == 0) yield break;
 
-        // Toplam süreyi, çıkacak toplam virüs sayısına bölüyoruz. 
-        // Böylece bölüm boyunca eşit aralıklarla düşecekler.
         float spawnInterval = levelDuration / itemsToSpawnList.Count;
 
         // Listeyi tek tek dön ve virüsleri fırlat
@@ -62,10 +60,8 @@ public class ItemPlacer : MonoBehaviour
             yield return new WaitForSeconds(spawnInterval); 
         }
     }
-
     private void SpawnSingleItem(Item prefab)
     {
-        // BoxCollider'ın sınırları (Bounds) içinde rastgele bir X, Y, Z noktası bul
         Bounds bounds = spawnArea.bounds;
         float randomX = Random.Range(bounds.min.x, bounds.max.x);
         float randomY = Random.Range(bounds.min.y, bounds.max.y);
@@ -73,7 +69,8 @@ public class ItemPlacer : MonoBehaviour
 
         Vector3 spawnPosition = new Vector3(randomX, randomY, randomZ);
 
-        // Şimdilik Instantiate ile yaratıyoruz. Pooling'e geçtiğimizde burayı Pool.Get() olarak değiştireceğiz.
-        Instantiate(prefab, spawnPosition, Quaternion.identity);
+        Item spawnedItem = PoolManager.Instance.GetItem(prefab, spawnPosition);
+            
+        spawnedItem.Initialize(); 
     }
 }
