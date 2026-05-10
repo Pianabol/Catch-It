@@ -150,7 +150,7 @@ Transform:
   m_GameObject: {fileID: 7102642955581061410}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 9.73, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 65, y: 65, z: 65}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -171,6 +171,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   rb: {fileID: 4234191078922427725}
   col: {fileID: 3105748741161860587}
+  minSpeed: 3
+  maxSpeed: 7
 --- !u!135 &3105748741161860587
 SphereCollider:
   m_ObjectHideFlags: 0

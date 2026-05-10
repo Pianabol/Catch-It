@@ -28,6 +28,8 @@ public class Item : MonoBehaviour
         // 2. Havuzdan kalan eski hızını/dönüşünü tamamen sil
         rb.linearVelocity = Vector3.zero; 
         rb.angularVelocity = Vector3.zero;
+        //Deneme 
+        transform.rotation = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
 
         
         PushSlightly();
@@ -36,7 +38,7 @@ public class Item : MonoBehaviour
     private void PushSlightly()
     {
         float randomSpeed = Random.Range(minSpeed, maxSpeed);
-        float randomZDirection = Random.Range(-2f, 2f); // Z ekseninde (yukarı/aşağı) hafif sapma
+        float randomZDirection = Random.Range(-5f, 5f); // Z ekseninde (yukarı/aşağı) hafif sapma
 
         // -X yönünde (sağdan sola) itiyoruz
         rb.linearVelocity = new Vector3(-randomSpeed, 0, randomZDirection);

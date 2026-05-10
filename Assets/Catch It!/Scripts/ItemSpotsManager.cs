@@ -8,7 +8,7 @@ public class ItemSpotsManager : MonoBehaviour
     [SerializeField] private GameObject clickEffectPrefab; 
 
     [Header(" Settings")]
-    [SerializeField] private float animationDuration = 0.4f;
+    [SerializeField] private float animationDuration;
 
     private void Awake()
     {
