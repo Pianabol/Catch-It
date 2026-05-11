@@ -64,13 +64,14 @@ public class ItemPlacer : MonoBehaviour
     {
         Bounds bounds = spawnArea.bounds;
         float randomX = Random.Range(bounds.min.x, bounds.max.x);
-        float randomY = Random.Range(bounds.min.y, bounds.max.y);
         float randomZ = Random.Range(bounds.min.z, bounds.max.z);
 
-        Vector3 spawnPosition = new Vector3(randomX, randomY, randomZ);
+        
+        float fixedY = 1.5f; 
+
+        Vector3 spawnPosition = new Vector3(randomX, fixedY, randomZ);
 
         Item spawnedItem = PoolManager.Instance.GetItem(prefab, spawnPosition);
-            
         spawnedItem.Initialize(); 
     }
 }

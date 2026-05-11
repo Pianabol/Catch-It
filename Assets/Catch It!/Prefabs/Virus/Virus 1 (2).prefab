@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6579755585088090198}
   - component: {fileID: 2439900318425229346}
   - component: {fileID: 3680803543980868262}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Viruse_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 423700828827911180}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 7281830736369554667}
   - component: {fileID: 3105748741161860587}
   - component: {fileID: 4234191078922427725}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Virus 1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,8 +171,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   rb: {fileID: 4234191078922427725}
   col: {fileID: 3105748741161860587}
-  minSpeed: 3
-  maxSpeed: 7
+  normalSpeed: 6
+  panicSpeedMultiplier: 3
+  panicDuration: 2.5
+  spinSpeed: 60
+  wallExplosionProbability: 0.05
+  bounceSpeedMultiplier: 1.6
+  maxBounceSpeed: 25
+  turnSmoothDuration: 0.3
+  offScreenXThreshold: -25
 --- !u!135 &3105748741161860587
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -219,5 +226,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 4
+  m_Constraints: 36
   m_CollisionDetection: 0

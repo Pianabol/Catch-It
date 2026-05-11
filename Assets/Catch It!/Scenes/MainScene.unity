@@ -256,23 +256,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemPlacer
   itemDatas:
   - itemPrefab: {fileID: -7875977477062105681, guid: 100c5af7b40c1474fafecab799063798, type: 3}
-    amount: 3
+    amount: 10
   - itemPrefab: {fileID: 7281830736369554667, guid: 3a2c9791b239d45bca60d278ccde972d, type: 3}
-    amount: 4
+    amount: 10
   - itemPrefab: {fileID: -3546077563129867251, guid: ad9dac368fb8d4e0bb4d862f10e4820e, type: 3}
-    amount: 2
-  - itemPrefab: {fileID: 1082750620328841084, guid: d47521685be574cddb0f6f4592eca994, type: 3}
-    amount: 2
-  - itemPrefab: {fileID: -8773928715168534919, guid: 25fb8583633834dcb8eb2254e48cf350, type: 3}
-    amount: 4
-  - itemPrefab: {fileID: -8152185358524028672, guid: 784020e977ded4cff923d14f3da6690d, type: 3}
-    amount: 3
-  - itemPrefab: {fileID: -3105887985005397771, guid: 079c5c3bf645546cb9f0328b84bcf555, type: 3}
-    amount: 3
-  - itemPrefab: {fileID: 66511249161218117, guid: 19cf39672d89e4c8a82e6c4700b93491, type: 3}
-    amount: 3
-  - itemPrefab: {fileID: 3017014663051942611, guid: be8b85b6594cd4d96929653d98957399, type: 3}
-    amount: 3
+    amount: 10
   spawnArea: {fileID: 303209009}
   levelDuration: 90
 --- !u!65 &303209009
@@ -448,7 +436,7 @@ GameObject:
   - component: {fileID: 371669623}
   m_Layer: 0
   m_Name: Upper Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -462,7 +450,7 @@ Transform:
   m_GameObject: {fileID: 371669621}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0.0363, y: 3.5, z: 6.48}
+  m_LocalPosition: {x: 0.0363, y: 2.4, z: 6.5}
   m_LocalScale: {x: 0.3745, y: 30.893606, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -860,8 +848,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   rb: {fileID: 591306834}
   col: {fileID: 591306835}
-  minSpeed: 3
-  maxSpeed: 7
+  normalSpeed: 4
+  panicSpeedMultiplier: 2.5
+  panicDuration: 1.5
+  spinSpeed: 360
+  wallExplosionProbability: 0.15
+  bounceSpeedMultiplier: 1.3
+  maxBounceSpeed: 15
+  turnSmoothDuration: 0.3
+  offScreenXThreshold: -25
 --- !u!1 &665412887
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,7 +1095,7 @@ GameObject:
   - component: {fileID: 1393780603}
   m_Layer: 0
   m_Name: Lower Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1114,7 +1109,7 @@ Transform:
   m_GameObject: {fileID: 1393780601}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0.0363, y: 3.5, z: -6.6}
+  m_LocalPosition: {x: 0.0363, y: 2.4, z: -6.5}
   m_LocalScale: {x: 0.3745, y: 30.893606, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1305,8 +1300,8 @@ Transform:
   m_GameObject: {fileID: 1695316923}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.1, y: 1, z: 2.5000002}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 4, y: 1, z: 2.5000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

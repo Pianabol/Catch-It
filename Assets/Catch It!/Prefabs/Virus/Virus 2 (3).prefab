@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1276535982935532788}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: joint63
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5475198819713170247}
   - component: {fileID: 4807499302707967875}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Virus_5_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ SkinnedMeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2758147520582937290}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -141,7 +141,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5778813813589571809}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: joint66
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5963289165124603747}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: joint62
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8296530708129780140}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: joint61
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9090406854400066486}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: joint59
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1390275503506179532}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: joint67
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4296459436533456610}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: joint65
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,7 @@ GameObject:
   - component: {fileID: -8152185358524028672}
   - component: {fileID: 6632879744690255705}
   - component: {fileID: 1750811116876778503}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Virus 2 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,8 +397,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   rb: {fileID: 6632879744690255705}
   col: {fileID: 1750811116876778503}
-  minSpeed: 3
-  maxSpeed: 7
+  normalSpeed: 6
+  panicSpeedMultiplier: 3
+  panicDuration: 2.5
+  spinSpeed: 60
+  wallExplosionProbability: 0.05
+  bounceSpeedMultiplier: 1.6
+  maxBounceSpeed: 25
+  turnSmoothDuration: 0.3
+  offScreenXThreshold: -25
 --- !u!54 &6632879744690255705
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -424,7 +431,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 4
+  m_Constraints: 36
   m_CollisionDetection: 0
 --- !u!65 &1750811116876778503
 BoxCollider:
@@ -456,7 +463,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1462664217034587362}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: joint64
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -488,7 +495,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1985716166642080225}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: joint60
   m_TagString: Untagged
   m_Icon: {fileID: 0}
