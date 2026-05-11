@@ -179,7 +179,11 @@ MonoBehaviour:
   bounceSpeedMultiplier: 1.6
   maxBounceSpeed: 25
   turnSmoothDuration: 0.3
-  offScreenXThreshold: -25
+  minZBounceForce: 3
+  maxZBounceForce: 6
+  maxHealth: 1
+  rageDashMultiplier: 2
+  offScreenXThreshold: -20
 --- !u!135 &3105748741161860587
 SphereCollider:
   m_ObjectHideFlags: 0

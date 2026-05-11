@@ -23,13 +23,22 @@ public class ItemSpotsManager : MonoBehaviour
    
     private void HandleItemClicked(Item item)
     {
-        item.DisablePhysics();
+        bool isDead = item.TakeDamage();
 
-        if (clickEffectPrefab != null)
+        if (isDead)
         {
-            Instantiate(clickEffectPrefab, item.transform.position, Quaternion.identity);
-        }
+            item.DisablePhysics();
+            
+            if (clickEffectPrefab != null)
+            {
+                Instantiate(clickEffectPrefab, item.transform.position, Quaternion.identity);
+            }
 
-        item.ReturnToPool();
+            item.ReturnToPool();
+        }
+        else
+        {
+            
+        }
     }
 }
