@@ -117,7 +117,7 @@ public class Item : MonoBehaviour
             }).id;
     }
 
-    public bool TakeDamage()
+    public virtual bool TakeDamage()
     {
         currentHealth--;
 
