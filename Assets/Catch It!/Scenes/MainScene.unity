@@ -617,6 +617,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSpotsManager
   itemSpot: {fileID: 1176022595}
   clickEffectPrefab: {fileID: 4646022623062991769, guid: c82d8dba908c24218bce0d7a3a8fe44f, type: 3}
+  friendlyClickEffectPrefab: {fileID: 4684641897386067452, guid: 351604cb3643740d6a51541d7877a66a, type: 3}
+  minEffectScale: 1
+  maxEffectScale: 1.2
   animationDuration: 0.2
 --- !u!4 &665412889
 Transform:

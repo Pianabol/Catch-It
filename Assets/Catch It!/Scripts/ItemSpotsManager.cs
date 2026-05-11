@@ -6,8 +6,11 @@ public class ItemSpotsManager : MonoBehaviour
     [Header(" Elemanlar ")]
     [SerializeField] private Transform itemSpot; 
     [SerializeField] private GameObject clickEffectPrefab; 
+    [SerializeField] private GameObject friendlyClickEffectPrefab;
 
-    [Header(" Settings")]
+    [Header(" Effect Scale Settings ")]
+    [SerializeField] private float minEffectScale = 1f;  
+    [SerializeField] private float maxEffectScale = 1.2f;
     [SerializeField] private float animationDuration;
 
     private void Awake()
@@ -20,7 +23,6 @@ public class ItemSpotsManager : MonoBehaviour
         InputManager.itemClicked -= HandleItemClicked;
     }
 
-   
     private void HandleItemClicked(Item item)
     {
         bool isDead = item.TakeDamage();
@@ -28,17 +30,22 @@ public class ItemSpotsManager : MonoBehaviour
         if (isDead)
         {
             item.DisablePhysics();
-            
-            if (clickEffectPrefab != null)
+
+            GameObject effectToSpawn = (item is FriendlyItem) ? friendlyClickEffectPrefab : clickEffectPrefab;
+
+            if (effectToSpawn != null)
             {
-                Instantiate(clickEffectPrefab, item.transform.position, Quaternion.identity);
+                GameObject spawnedEffect = Instantiate(effectToSpawn, item.transform.position, Quaternion.identity);
+                
+                float randomScaleMultiplier = UnityEngine.Random.Range(minEffectScale, maxEffectScale);
+                spawnedEffect.transform.localScale *= randomScaleMultiplier;
             }
 
             item.ReturnToPool();
         }
         else
         {
-            
+            // Virüs ölmediyse yapılacaklar
         }
     }
 }
