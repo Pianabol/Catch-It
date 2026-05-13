@@ -54,9 +54,16 @@ public class ItemPlacer : MonoBehaviour
         // Listeyi tek tek dön ve virüsleri fırlat
         foreach (Item prefab in itemsToSpawnList)
         {
-            SpawnSingleItem(prefab);
+            // GoalManager sahnedeyse ve "Bunu hala spawn etmelisin" diyorsa fırlat.
+            if (GoalManager.Instance != null && GoalManager.Instance.ShouldSpawn(prefab))
+            {
+                SpawnSingleItem(prefab);
+            }
+            else
+            {
+    
+            }
             
-            // Bir sonraki virüse kadar hesapladığımız interval kadar bekle
             yield return new WaitForSeconds(spawnInterval); 
         }
     }
