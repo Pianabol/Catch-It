@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System; 
 
 [System.Serializable]
 public class GoalData
@@ -10,14 +11,16 @@ public class GoalData
     
     [HideInInspector] public int currentAmount;  
     [HideInInspector] public bool isCompleted;  
+    public int RemainingAmount => Mathf.Max(0, targetAmount - currentAmount);
 }
 
 public class GoalManager : MonoBehaviour
 {
     public static GoalManager Instance; 
-
-    [Header(" Goal Cards ")]
     public List<GoalData> activeGoals = new List<GoalData>();
+    public static event Action<GoalData> OnGoalUpdated;       
+    public static event Action<GoalData> OnGoalCompleted;     
+    public static event Action OnLevelCompleted;              
 
     private void Awake()
     {
@@ -32,6 +35,22 @@ public class GoalManager : MonoBehaviour
         }
     }
 
+    public void SetLevelGoals(List<GoalData> goalsFromLevel)
+    {
+        activeGoals.Clear();
+        
+        foreach (var goal in goalsFromLevel)
+        {
+            activeGoals.Add(new GoalData 
+            { 
+                itemPrefab = goal.itemPrefab, 
+                targetAmount = goal.targetAmount 
+            });
+        }
+        
+        Debug.Log("Bölüm hedefleri LevelManager'dan başarıyla yüklendi!");
+    }
+
     public void UpdateGoalProgress(Item item)
     {
         string cleanName = item.name.Replace("(Clone)", "").Trim();
@@ -41,12 +60,17 @@ public class GoalManager : MonoBehaviour
         {
             goal.currentAmount++;
             
-            Debug.Log($"<color=cyan> Goal Card Güncel Veri: {goal.itemPrefab.name} -> {goal.currentAmount}/{goal.targetAmount}</color>");
+            OnGoalUpdated?.Invoke(goal);
+            Debug.Log($"<color=cyan> Goal Card Güncel Veri: {goal.itemPrefab.name} -> Kalan: {goal.RemainingAmount}</color>");
 
             if (goal.currentAmount >= goal.targetAmount)
             {
                 goal.isCompleted = true;
+                
+                OnGoalCompleted?.Invoke(goal);
                 Debug.Log($"<color=green> HEDEF TAMAMLANDI: {goal.itemPrefab.name}</color>");
+
+                CheckLevelWinCondition();
             }
         }
     }
@@ -67,10 +91,19 @@ public class GoalManager : MonoBehaviour
             if (!goal.isCompleted)
             {
                 goal.targetAmount++;  
+                OnGoalUpdated?.Invoke(goal);
             }
         }
-        Debug.Log("<color=yellow> Ceza! Aktif hedeflerin tamamlanma şartı +1 arttı!</color>");
+        Debug.Log("<color=yellow>  Ceza! Aktif hedeflerin tamamlanma şartı +1 arttı!</color>");
     }
 
-    
+    private void CheckLevelWinCondition()
+    {
+        bool allDone = activeGoals.All(g => g.isCompleted);
+        if (allDone)
+        {
+            Debug.Log("<color=magenta>  BÜTÜN HEDEFLER BİTTİ! BÖLÜM GEÇİLDİ!</color>");
+            OnLevelCompleted?.Invoke(); 
+        }
+    }
 }

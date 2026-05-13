@@ -1079,11 +1079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9ffb137316ad481a85e6a278ff2e0db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoalManager
-  activeGoals:
-  - itemPrefab: {fileID: -7875977477062105681, guid: 100c5af7b40c1474fafecab799063798, type: 3}
-    targetAmount: 3
-    currentAmount: 0
-    isCompleted: 0
+  activeGoals: []
 --- !u!4 &1864496552
 Transform:
   m_ObjectHideFlags: 0
@@ -1208,10 +1204,10 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1015367557}
+  - {fileID: 3057396751293955735}
   - {fileID: 1864496552}
   - {fileID: 2010455699}
   - {fileID: 1748436450}
   - {fileID: 665412889}
   - {fileID: 758897317}
   - {fileID: 1695316927}
-  - {fileID: 3057396751293955735}

@@ -121,23 +121,27 @@ public class Item : MonoBehaviour
 
     public virtual bool TakeDamage()
     {
-        currentHealth--;
+        Debug.Log($"<color=orange>1. [TETİK] {gameObject.name} vuruldu! isDead kalkanı şu an: {isDead}</color>");
+        
+        if (isDead) 
+        {
+            Debug.Log($"<color=red>2. [KORUMA BAŞARILI] {gameObject.name} zaten ölmüş, ikinci vuruş engellendi!</color>");
+            return false; 
+        }
 
+        currentHealth--;
+        
         if (currentHealth <= 0)
         {
-            return true; // Virüs öldü!
+            isDead = true; 
+            Debug.Log($"<color=green>3. [ÖLÜM ONAYI] {gameObject.name} tam şu an öldü. Goal Manager'a tek sinyal gidiyor.</color>");
+            return true;   
         }
         else
         {
-            // Virüs ölmedi, ÖFKE MODU! (Dash atıyor)
-            // Mevcut hızını aniden rageDashMultiplier ile çarpıyoruz
             rb.linearVelocity = rb.linearVelocity.normalized * (rb.linearVelocity.magnitude * rageDashMultiplier);
-            
-            // Eğer istersen buraya sonradan Viyaklama Sesi (SFX) ekleyeceğiz
-            
             ApplyHitEffect();
-
-            return false; // Virüs hala hayatta!
+            return false; 
         }
     }
 
