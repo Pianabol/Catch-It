@@ -35,6 +35,23 @@ public class GoalManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        LevelManager.levelSpawned += OnLevelSpawned;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.levelSpawned -= OnLevelSpawned;
+    }
+
+    private void OnLevelSpawned(Level spawnedLevel)
+    {
+        // Level doğduğu anda içindeki hedefleri çek!
+        SetLevelGoals(spawnedLevel.GetGoals());
+        Debug.Log($"<color=green> GoalManager: Yeni bölüm sinyali alındı, hedefler yüklendi.</color>");
+    }
+
     public void SetLevelGoals(List<GoalData> goalsFromLevel)
     {
         activeGoals.Clear();

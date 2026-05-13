@@ -137,7 +137,7 @@ MonoBehaviour:
   - itemPrefab: {fileID: -8152185358524028672, guid: 784020e977ded4cff923d14f3da6690d, type: 3}
     amount: 0
   - itemPrefab: {fileID: -3105887985005397771, guid: 079c5c3bf645546cb9f0328b84bcf555, type: 3}
-    amount: 0
+    amount: 10
   - itemPrefab: {fileID: 66511249161218117, guid: 19cf39672d89e4c8a82e6c4700b93491, type: 3}
     amount: 0
   - itemPrefab: {fileID: 3017014663051942611, guid: be8b85b6594cd4d96929653d98957399, type: 3}
@@ -174,7 +174,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4585765221936907209}
-  - component: {fileID: 6057550974661023522}
+  - component: {fileID: 3489589774823773762}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -199,7 +199,7 @@ Transform:
   - {fileID: 142399789634144947}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6057550974661023522
+--- !u!114 &3489589774823773762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,15 +210,19 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53f89df6d5a93427bb532680f46f5ff1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelManager
+  m_EditorClassIdentifier: Assembly-CSharp::Level
   itemPlacer: {fileID: 3508594251306889625}
   friendSpawner: {fileID: 8132802935915278538}
   levelGoals:
-  - itemPrefab: {fileID: -7875977477062105681, guid: 100c5af7b40c1474fafecab799063798, type: 3}
-    targetAmount: 3
+  - itemPrefab: {fileID: -3105887985005397771, guid: 079c5c3bf645546cb9f0328b84bcf555, type: 3}
+    targetAmount: 5
     currentAmount: 0
     isCompleted: 0
   - itemPrefab: {fileID: 1082750620328841084, guid: d47521685be574cddb0f6f4592eca994, type: 3}
-    targetAmount: 2
+    targetAmount: 4
+    currentAmount: 0
+    isCompleted: 0
+  - itemPrefab: {fileID: -7875977477062105681, guid: 100c5af7b40c1474fafecab799063798, type: 3}
+    targetAmount: 3
     currentAmount: 0
     isCompleted: 0

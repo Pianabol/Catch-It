@@ -1,22 +1,52 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System;
 
 public class LevelManager : MonoBehaviour
 {
-    [Header(" Spawners ")]
-    [SerializeField] private ItemPlacer itemPlacer;
-    [SerializeField] private ItemSpawner friendSpawner;
+    [Header( " Levels ")]
+    [SerializeField] private Level[] levels;
+    private const string levelKey= "LevelReached";
+    private int levelIndex;
 
-    [Header(" Level Goals ")]
-    [SerializeField] private List<GoalData> levelGoals; // Bölümün hedefleri artık burada
+    [Header(" Settings ")]
+    private Level currentLevel; 
 
-    private void Start()
+    [Header(" Actions ")]
+    public static Action<Level> levelSpawned;
+
+    private void Awake()
     {
-        if (GoalManager.Instance != null)
-        {
-            GoalManager.Instance.SetLevelGoals(levelGoals);
-        }
-    
+        LoadData();
     }
-    public List<GoalData> GetGoals() => levelGoals;
+
+    void Start()
+    {
+        SpawnLevel();
+    }
+    
+    private void SpawnLevel()
+    {
+        transform.Clear();
+
+        if(levels.Length <= 0)
+        {
+            Debug.LogError("LevelManager: No levels assigned in the inspector!");
+            return;
+        }
+
+        int validatedIndex = Mathf.Clamp(levelIndex, 0, levels.Length - 1);
+        currentLevel = Instantiate(levels[validatedIndex], transform);
+        
+        levelSpawned?.Invoke(currentLevel);
+
+    }
+
+    private void LoadData()
+    {
+        levelIndex = PlayerPrefs.GetInt(levelKey);
+    }
+    private void SaveData()
+    {
+        PlayerPrefs.SetInt(levelKey, levelIndex);
+    }
 }
