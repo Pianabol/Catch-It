@@ -101,7 +101,7 @@ MonoBehaviour:
   panicSpeedMultiplier: 2.5
   panicDuration: 1.5
   spinSpeed: 90
-  wallExplosionProbability: 0.15
+  wallExplosionProbability: 0
   bounceSpeedMultiplier: 1.3
   maxBounceSpeed: 15
   turnSmoothDuration: 0.3

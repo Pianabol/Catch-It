@@ -3,11 +3,13 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public int PrefabID { get; set; } 
-    
+    /*
     private static readonly int Color1ID = Shader.PropertyToID("_Color_1");
     private static readonly int Color2ID = Shader.PropertyToID("_Color_2");
     private static readonly int Color3ID = Shader.PropertyToID("_Color_3_Overlay");
-
+    */
+    
+    private static readonly int BaseColorID = Shader.PropertyToID("_BaseColor");
     // Performans dostu renk değiştirme bloğumuz
     private MaterialPropertyBlock mpb;
     private float currentSpinAngle; // Burgu dönüşünü aklında tutması için
@@ -141,38 +143,22 @@ public class Item : MonoBehaviour
 
     private void DamageFlash()
     {
-        // 1. Patlama rengimiz (HDR Beyaz)
         Color flashColor = Color.white * 5f; 
+        Color normalColor = Color.white; 
 
-        // 2. Virüsün kendi orijinal renklerini materyalinden okuyalım (Siyaha dönmesin diye)
-        // İlk renderer'ın materyaline bakmamız yeterli, hepsi aynı zaten
-        Material mat = allRenderers[0].sharedMaterial;
-        Color origColor1 = mat.GetColor(Color1ID);
-        Color origColor2 = mat.GetColor(Color2ID);
-        Color origColor3 = mat.GetColor(Color3ID);
-
-        // 3. 0.1 saniyede beyaza git ve geri dön
         LeanTween.value(gameObject, 0f, 1f, 0.1f)
             .setLoopPingPong(1)
             .setOnUpdate((float t) =>
             {
-                // Orijinal renklerden -> Beyaza doğru yumuşak geçiş (Lerp)
-                Color lerped1 = Color.Lerp(origColor1, flashColor, t);
-                Color lerped2 = Color.Lerp(origColor2, flashColor, t);
-                Color lerped3 = Color.Lerp(origColor3, flashColor, t);
-
+                Color lerpedColor = Color.Lerp(normalColor, flashColor, t);
+                
                 foreach (Renderer r in allRenderers)
                 {
-                    r.GetPropertyBlock(mpb);
-                    // Senin shader'ındaki 3 rengi de aynı anda patlatıyoruz!
-                    mpb.SetColor(Color1ID, lerped1);
-                    mpb.SetColor(Color2ID, lerped2);
-                    mpb.SetColor(Color3ID, lerped3);
-                    r.SetPropertyBlock(mpb);
+                    r.GetPropertyBlock(mpb); 
+                    mpb.SetColor(BaseColorID, lerpedColor); // Artık sadece tek bir ana rengi patlatıyoruz
+                    r.SetPropertyBlock(mpb); 
                 }
             }).setOnComplete(() => {
-                // SİHİRLİ DOKUNUŞ: Animasyon bitince PropertyBlock'u temizle (null).
-                // Bu sayede virüs anında Inspector'daki o kendi orijinal kusursuz haline sıfır hatayla geri döner.
                 foreach (Renderer r in allRenderers)
                 {
                     r.SetPropertyBlock(null); 
