@@ -16,6 +16,9 @@ public class GoalData
 
 public class GoalManager : MonoBehaviour
 {
+    [Header(" Goal Card Prefab ")]
+    [SerializeField] private Transform goalCardParent;
+    [SerializeField] private GoalCard goalCardPrefab;
     public static GoalManager Instance; 
     public List<GoalData> activeGoals = new List<GoalData>();
     public static event Action<GoalData> OnGoalUpdated;       
@@ -50,6 +53,31 @@ public class GoalManager : MonoBehaviour
         // Level doğduğu anda içindeki hedefleri çek!
         SetLevelGoals(spawnedLevel.GetGoals());
         Debug.Log($"<color=green> GoalManager: Yeni bölüm sinyali alındı, hedefler yüklendi.</color>");
+
+        GenerateGoalCards();
+    }
+
+    private void GenerateGoalCards()
+    {
+        for(int i = 0; i<activeGoals.Count; i++)
+        {
+            GoalData goal = activeGoals[i];
+            GoalCard card = Instantiate(goalCardPrefab, goalCardParent);
+            card.Configure(goal.targetAmount);
+            int index = i; 
+            OnGoalUpdated += (updatedGoal) => {
+                if (updatedGoal == goal)
+                {
+                    card.UpdateAmount(updatedGoal.RemainingAmount);
+                }
+            };
+            OnGoalCompleted += (completedGoal) => {
+                if (completedGoal == goal)
+                {
+                    card.Complete();
+                }
+            };
+        }
     }
 
     public void SetLevelGoals(List<GoalData> goalsFromLevel)
