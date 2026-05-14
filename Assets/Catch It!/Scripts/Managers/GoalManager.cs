@@ -63,7 +63,7 @@ public class GoalManager : MonoBehaviour
         {
             GoalData goal = activeGoals[i];
             GoalCard card = Instantiate(goalCardPrefab, goalCardParent);
-            card.Configure(goal.targetAmount);
+            card.Configure(goal.targetAmount, goal.itemPrefab.Icon);
             int index = i; 
             OnGoalUpdated += (updatedGoal) => {
                 if (updatedGoal == goal)

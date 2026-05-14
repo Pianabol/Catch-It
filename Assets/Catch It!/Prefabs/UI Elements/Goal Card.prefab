@@ -513,4 +513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a54e0bc784bf14f2781754df1d69d8dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoalCard
+  iconImage: {fileID: 8746126826744781646}
   amountText: {fileID: 4803942504093407049}
+  checkMark: {fileID: 998435553871944220}
+  backFace: {fileID: 7487730934379198551}

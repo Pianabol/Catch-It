@@ -505,6 +505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   rb: {fileID: 1010419950038896601}
   col: {fileID: 3574021643665879356}
+  icon: {fileID: 21300000, guid: e3d9eea47bd1142d5962a3508eb48212, type: 3}
   normalSpeed: 6
   panicSpeedMultiplier: 3
   panicDuration: 2.5
