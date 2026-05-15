@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,6 +43,21 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         SetGameState(EGameState.GAME);
+    }
+
+    public void NextButtonCallBack()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void RetryButtonCallBack()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public bool IsGame()
+    {
+        return gameState == EGameState.GAME;
     }
 
 

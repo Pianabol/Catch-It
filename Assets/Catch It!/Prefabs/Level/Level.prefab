@@ -213,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Level
   itemPlacer: {fileID: 3508594251306889625}
   friendSpawner: {fileID: 8132802935915278538}
+  duration: 60
   levelGoals:
   - itemPrefab: {fileID: -3105887985005397771, guid: 079c5c3bf645546cb9f0328b84bcf555, type: 3}
     targetAmount: 5

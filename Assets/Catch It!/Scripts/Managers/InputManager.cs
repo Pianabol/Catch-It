@@ -9,6 +9,14 @@ public class InputManager : MonoBehaviour
     private Item currentItem;
     void Update()
     {
+        if(GameManager.Instance.IsGame())
+        {
+            HandleControl();
+        }
+    }
+    
+    private void HandleControl()
+    {
         if(Input.GetMouseButtonDown(0))
         {
             HandleClick();

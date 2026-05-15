@@ -57,5 +57,10 @@ public class LevelManager : MonoBehaviour, IGameStateListener
         {
             SpawnLevel();
         }       
+        else if (newState == EGameState.LEVELCOMPLETE)
+        {
+            levelIndex++;
+            SaveData();
+        }
     }
 }

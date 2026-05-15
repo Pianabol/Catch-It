@@ -8,6 +8,8 @@ public class Level : MonoBehaviour
     [SerializeField] private ItemSpawner friendSpawner;
 
     [Header(" Level Goals ")]
+    [SerializeField] private int duration;
+    public int Duration => duration;
     [SerializeField] private List<GoalData> levelGoals; // Bölümün hedefleri artık burada
     public List<GoalData> GetGoals() => levelGoals;
 
