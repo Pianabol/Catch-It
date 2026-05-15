@@ -16,7 +16,7 @@ public class ItemPlacer : MonoBehaviour
     private List<Item> itemsToSpawnList = new List<Item>();
 
     [Button]
-    private void StartSpawning()
+    public void StartSpawning()
     {
         PrepareSpawnList();
         StartCoroutine(SpawnRoutine());

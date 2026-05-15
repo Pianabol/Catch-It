@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : MonoBehaviour, IGameStateListener
 {
     [Header( " Levels ")]
     [SerializeField] private Level[] levels;
@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        SpawnLevel();
+        
     }
     
     private void SpawnLevel()
@@ -38,6 +38,7 @@ public class LevelManager : MonoBehaviour
         currentLevel = Instantiate(levels[validatedIndex], transform);
         
         levelSpawned?.Invoke(currentLevel);
+        currentLevel.StartLevel();
 
     }
 
@@ -48,5 +49,13 @@ public class LevelManager : MonoBehaviour
     private void SaveData()
     {
         PlayerPrefs.SetInt(levelKey, levelIndex);
+    }
+
+    public void GameStateChanged(EGameState newState)
+    {
+        if (newState == EGameState.GAME)
+        {
+            SpawnLevel();
+        }       
     }
 }

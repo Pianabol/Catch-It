@@ -10,4 +10,12 @@ public class Level : MonoBehaviour
     [Header(" Level Goals ")]
     [SerializeField] private List<GoalData> levelGoals; // Bölümün hedefleri artık burada
     public List<GoalData> GetGoals() => levelGoals;
+
+    public void StartLevel()
+    {
+        if (itemPlacer != null) itemPlacer.StartSpawning();
+        if (friendSpawner != null) friendSpawner.StartSpawning();
+        
+        Debug.Log("<color=orange>Level: Spawner'lara ateş emri verildi!</color>");
+    }
 }
