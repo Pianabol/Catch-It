@@ -95,8 +95,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f714da10205401e8efc574591f82fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FriendlyItem
+  itemType: 1
   rb: {fileID: 1635811277344836357}
   col: {fileID: 9135618290811301252}
+  icon: {fileID: 0}
   normalSpeed: 4
   panicSpeedMultiplier: 2.5
   panicDuration: 1.5

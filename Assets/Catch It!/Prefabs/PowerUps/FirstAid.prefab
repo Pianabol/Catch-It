@@ -105,6 +105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FirstAidKit
   type: 0
+  remainingUses: 8
+  killArea: {fileID: 0}
 --- !u!65 &8535230787322496179
 BoxCollider:
   m_ObjectHideFlags: 0

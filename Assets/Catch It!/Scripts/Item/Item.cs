@@ -1,7 +1,16 @@
 using UnityEngine;
 
+public enum EItemType
+{
+    Virus,
+    Friendly
+}
+
 public class Item : MonoBehaviour
 {
+    [Header(" Item Settings ")]
+    public EItemType itemType;
+    
     public int PrefabID { get; set; } 
     /*
     private static readonly int Color1ID = Shader.PropertyToID("_Color_1");

@@ -3,10 +3,6 @@ using UnityEngine;
 public class PowerupManager : MonoBehaviour
 {
     public static PowerupManager Instance;
-    
-    [Header(" General Settings ")]
-    [SerializeField] private BoxCollider spawnArea; 
-    public BoxCollider GetSpawnArea() => spawnArea;
 
     private void Awake()
     {
