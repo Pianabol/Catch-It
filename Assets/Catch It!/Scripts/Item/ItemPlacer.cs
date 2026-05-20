@@ -8,20 +8,26 @@ public class ItemPlacer : MonoBehaviour
 {
     [Header(" Elements ")]
     [SerializeField] private List<ItemLevelData> itemDatas;
+    [SerializeField] private List<Item> friendlyPrefabs; 
 
     [Header(" Settings ")]
     [SerializeField] private BoxCollider spawnArea;
     [SerializeField] private float levelDuration = 90f;
 
-    [Header(" Data ")]
-    private Item[] items; // Sahnedeki tüm virüsler
+    [Header(" Fruit Ninja Tempo Settings ")]
+    [SerializeField] private float minWaveDelay = 1.5f;
+    [SerializeField] private float maxWaveDelay = 3f;
+    [SerializeField] private int minItemsPerWave = 3;
+    [SerializeField] private int maxItemsPerWave = 5;
+    [SerializeField] private float microDelayBetweenItems = 0.1f;
 
-    // Çıkacak tüm virüsleri tutacağımız geçici liste
+    [Header(" Data ")]
+    private Item[] items; 
+
     private List<Item> itemsToSpawnList = new List<Item>();
 
     public Item[] GetItems()
     {
-        // Sahnede şu an aktif olarak uçuşan tüm virüsleri bulur
         return GetComponentsInChildren<Item>().Where(x => x.gameObject.activeInHierarchy).ToArray();
     }
 
@@ -36,7 +42,6 @@ public class ItemPlacer : MonoBehaviour
     {
         itemsToSpawnList.Clear();
 
-        // 1. Torbayı Doldur: Inspector'daki listeye bakıp istenen adet kadar prefab'ı listeye ekliyoruz.
         foreach (var data in itemDatas)
         {
             for (int i = 0; i < data.amount; i++)
@@ -45,7 +50,6 @@ public class ItemPlacer : MonoBehaviour
             }
         }
 
-        // 2. Torbayı Karıştır (Shuffle): Hep aynı tür virüsler arka arkaya düşmesin diye listeyi rastgele karıştırıyoruz.
         for (int i = 0; i < itemsToSpawnList.Count; i++)
         {
             Item temp = itemsToSpawnList[i];
@@ -59,31 +63,53 @@ public class ItemPlacer : MonoBehaviour
     {
         if (itemsToSpawnList.Count == 0) yield break;
 
-        float spawnInterval = levelDuration / itemsToSpawnList.Count;
+        int currentIndex = 0;
 
-        // Listeyi tek tek dön ve virüsleri fırlat
-        foreach (Item prefab in itemsToSpawnList)
+        // Torbadaki virüsler bitene kadar dalga dalga fırlatmaya devam et
+        while (currentIndex < itemsToSpawnList.Count)
         {
-            // GoalManager sahnedeyse ve "Bunu hala spawn etmelisin" diyorsa fırlat.
-            if (GoalManager.Instance != null && GoalManager.Instance.ShouldSpawn(prefab))
+            int waveSize = Random.Range(minItemsPerWave, maxItemsPerWave + 1);
+            int trapIndex = Random.Range(0, waveSize); // Bu dalgadaki tuzak sırası
+
+            for (int i = 0; i < waveSize; i++)
             {
-                SpawnSingleItem(prefab);
+                if (GoalManager.Instance != null)
+                {
+                    if (i == trapIndex && friendlyPrefabs != null && friendlyPrefabs.Count > 0)
+                    {
+                        Item randomFriendly = friendlyPrefabs[Random.Range(0, friendlyPrefabs.Count)];
+                        SpawnSingleItem(randomFriendly);
+                    }
+                    else
+                    {
+                        if (currentIndex < itemsToSpawnList.Count)
+                        {
+                            Item prefab = itemsToSpawnList[currentIndex];
+                            
+                            if (GoalManager.Instance.ShouldSpawn(prefab))
+                            {
+                                SpawnSingleItem(prefab);
+                            }
+                            
+                            currentIndex++;
+                        }
+                    }
+                }
+                
+                yield return new WaitForSeconds(microDelayBetweenItems); 
             }
-            else
-            {
-    
-            }
-            
-            yield return new WaitForSeconds(spawnInterval); 
+
+            float nextWaveWait = Random.Range(minWaveDelay, maxWaveDelay);
+            yield return new WaitForSeconds(nextWaveWait);
         }
     }
+
     private void SpawnSingleItem(Item prefab)
     {
         Bounds bounds = spawnArea.bounds;
         float randomX = Random.Range(bounds.min.x, bounds.max.x);
         float randomZ = Random.Range(bounds.min.z, bounds.max.z);
 
-        
         float fixedY = 1.5f; 
 
         Vector3 spawnPosition = new Vector3(randomX, fixedY, randomZ);

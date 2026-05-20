@@ -10,6 +10,12 @@ public class FreezeGun : PowerUp
     [Tooltip("Silahın ateş etmek için alacağı açı")]
     [SerializeField] private Vector3 aimRotation = new Vector3(-35.233f, -90f, 180f);
 
+    [Header(" VFX Settings ")]
+    [Tooltip("Silahın ucundaki boş GameObject (Shooting Point)")]
+    [SerializeField] private Transform shootingPoint;
+    
+    [Tooltip("Patlayacak o şekil buz efektinin Prefab'ı")]
+    [SerializeField] private GameObject freezeEffectPrefab;
     public override void Activate()
     {
         // simdilik bos
@@ -44,6 +50,20 @@ public class FreezeGun : PowerUp
     private void FireFreezeBeam()
     {
         Debug.Log("<color=cyan>PEW! Freeze Gun Ateş Etti!</color>");
+
+        if (shootingPoint != null && freezeEffectPrefab != null)
+        {
+            // Efekti tam namlunun ucunda, namlunun baktığı açıya göre oluştur
+            GameObject vfx = Instantiate(freezeEffectPrefab, shootingPoint.position, shootingPoint.rotation);
+            
+            // Sahneyi çöplüğe çevirmemek için efekti 2 saniye sonra otomatik yok et
+            // (Eğer efektin kendi süresi daha uzun/kısaysa buradaki 2f değerini ona göre değiştirebilirsin)
+            Destroy(vfx, 2f); 
+        }
+        else
+        {
+            Debug.LogWarning("FreezeGun: Shooting Point veya Effect Prefab eksik!");
+        }
 
         if (TimerManager.Instance != null)
         {

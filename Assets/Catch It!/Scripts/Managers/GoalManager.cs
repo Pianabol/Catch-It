@@ -132,6 +132,12 @@ public class GoalManager : MonoBehaviour
 
     public void ApplyPenalty()
     {
+        if (Shield.IsActive)
+        {
+            Debug.Log("<color=cyan>Kalkan devrede! Ceza bloklandı, hedef artmadı.</color>");
+            return; 
+        }
+
         foreach (var goal in activeGoals)
         {
             if (!goal.isCompleted)
@@ -150,6 +156,8 @@ public class GoalManager : MonoBehaviour
         {
             Debug.Log("<color=magenta>  BÜTÜN HEDEFLER BİTTİ! BÖLÜM GEÇİLDİ!</color>");
             OnLevelCompleted?.Invoke(); 
+
+            GameManager.Instance.SetGameState(EGameState.LEVELCOMPLETE);
         }
     }
 }
