@@ -1,34 +1,53 @@
 using UnityEngine;
+using NaughtyAttributes;
 
 public class FreezeGun : PowerUp
 {
-    private Vector3 originalPos;
-
-    private void Start()
-    {
-        originalPos = transform.localPosition;
-    }
+    [Header(" Aim Settings ")]
+    [Tooltip("Silahın ateş etmek için gideceği pozisyon")]
+    [SerializeField] private Vector3 aimPosition = new Vector3(0f, -0.18f, -0.4f);
+    
+    [Tooltip("Silahın ateş etmek için alacağı açı")]
+    [SerializeField] private Vector3 aimRotation = new Vector3(-35.233f, -90f, 180f);
 
     public override void Activate()
     {
-        Debug.Log("<color=cyan>Freeze Gun: Zaman donduruldu, Timer buz tuttu!</color>");
+        // simdilik bos
     }
-
     protected override void PlayClickAnimation()
     {
         LeanTween.cancel(gameObject);
-        transform.localPosition = originalPos;
-
-        LeanTween.moveLocalY(gameObject, originalPos.y + 1.5f, 0.2f).setEaseOutQuad().setOnComplete(() =>
-        {
-            Debug.Log("Silah Ateş Etti! PEW PEW!");
     
-            LeanTween.moveLocalZ(gameObject, transform.localPosition.z - 0.5f, 0.1f).setLoopPingPong(1);
+        transform.localPosition = originalPosition;
+        transform.localRotation = originalRotation;
 
-            LeanTween.delayedCall(0.5f, () => 
+        float aimDuration = 0.3f; 
+
+
+        LeanTween.moveLocal(gameObject, aimPosition, aimDuration).setEase(LeanTweenType.easeOutQuad);
+        LeanTween.rotateLocal(gameObject, aimRotation, aimDuration).setEase(LeanTweenType.easeOutQuad).setOnComplete(() =>
+        {
+            // Recoil
+            LeanTween.moveLocalZ(gameObject, aimPosition.z + 0.15f, 0.1f).setLoopPingPong(1).setOnComplete(() => 
             {
-                LeanTween.moveLocalY(gameObject, originalPos.y, 0.2f).setEaseInQuad();
+                FireFreezeBeam();
+
+                LeanTween.delayedCall(0.4f, () => 
+                {
+                    LeanTween.moveLocal(gameObject, originalPosition, aimDuration).setEase(LeanTweenType.easeInOutSine);
+                    LeanTween.rotateLocal(gameObject, originalRotation.eulerAngles, aimDuration).setEase(LeanTweenType.easeInOutSine);
+                });
             });
         });
+    }
+
+    private void FireFreezeBeam()
+    {
+        Debug.Log("<color=cyan>PEW! Freeze Gun Ateş Etti!</color>");
+
+        if (TimerManager.Instance != null)
+        {
+            TimerManager.Instance.FreezeTimer(5f);
+        }
     }
 }

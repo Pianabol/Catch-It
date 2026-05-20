@@ -16,14 +16,14 @@ public abstract class PowerUp : MonoBehaviour
 
     [Header(" Usage Settings ")]
     [SerializeField] protected int remainingUses = 3; 
-    private Vector3 originalPosition;
-    private Quaternion originalRotation;
-    private Vector3 originalScale;
+    protected Vector3 originalPosition;
+    protected Quaternion originalRotation;
+    protected Vector3 originalScale;
 
     [Header(" Elemanlar ")]
     [SerializeField] private TextMeshPro amountText;
 
-    private void Start()
+    protected virtual void Start()
     {
         originalPosition = transform.localPosition;
         originalRotation = transform.localRotation;

@@ -68,6 +68,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FreezeGun
   type: 1
+  remainingUses: 2
+  amountText: {fileID: 0}
+  aimPosition: {x: 0, y: -0.18, z: -0.4}
+  aimRotation: {x: -35.233, y: -90, z: 180}
 --- !u!1 &1856491727608866864
 GameObject:
   m_ObjectHideFlags: 0
