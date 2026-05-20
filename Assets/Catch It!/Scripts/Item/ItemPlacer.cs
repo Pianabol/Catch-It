@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using System.Linq;
 
 public class ItemPlacer : MonoBehaviour
 {
@@ -12,8 +13,17 @@ public class ItemPlacer : MonoBehaviour
     [SerializeField] private BoxCollider spawnArea;
     [SerializeField] private float levelDuration = 90f;
 
+    [Header(" Data ")]
+    private Item[] items; // Sahnedeki tüm virüsler
+
     // Çıkacak tüm virüsleri tutacağımız geçici liste
     private List<Item> itemsToSpawnList = new List<Item>();
+
+    public Item[] GetItems()
+    {
+        // Sahnede şu an aktif olarak uçuşan tüm virüsleri bulur
+        return GetComponentsInChildren<Item>().Where(x => x.gameObject.activeInHierarchy).ToArray();
+    }
 
     [Button]
     public void StartSpawning()

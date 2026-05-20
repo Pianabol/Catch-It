@@ -3,11 +3,13 @@ using System;
 
 public class LevelManager : MonoBehaviour, IGameStateListener
 {
+    public static LevelManager Instance;
+
     [Header( " Levels ")]
     [SerializeField] private Level[] levels;
     private const string levelKey= "LevelReached";
     private int levelIndex;
-
+    public Item[] Items => currentLevel.GetItems();
     [Header(" Settings ")]
     private Level currentLevel; 
 
@@ -16,6 +18,15 @@ public class LevelManager : MonoBehaviour, IGameStateListener
 
     private void Awake()
     {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
         LoadData();
     }
 

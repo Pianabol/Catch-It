@@ -23,7 +23,8 @@ public class GoalManager : MonoBehaviour
     public List<GoalData> activeGoals = new List<GoalData>();
     public static event Action<GoalData> OnGoalUpdated;       
     public static event Action<GoalData> OnGoalCompleted;     
-    public static event Action OnLevelCompleted;              
+    public static event Action OnLevelCompleted;       
+    
 
     private void Awake()
     {

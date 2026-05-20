@@ -20,4 +20,9 @@ public class Level : MonoBehaviour
         
         Debug.Log("<color=orange>Level: Spawner'lara ateş emri verildi!</color>");
     }
+
+    public Item[] GetItems()
+    {
+        return itemPlacer.GetItems();
+    }
 }
