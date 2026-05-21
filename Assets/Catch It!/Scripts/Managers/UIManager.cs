@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro; 
 
 public class UIManager : MonoBehaviour, IGameStateListener
 {
@@ -7,6 +8,34 @@ public class UIManager : MonoBehaviour, IGameStateListener
     [SerializeField] private GameObject gamePanel;
     [SerializeField] private GameObject levelCompletePanel;
     [SerializeField] private GameObject gameOverPanel;
+
+    [Header(" Score UI Elements ")]
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private RectTransform pointDiv;
+
+    private Vector3 originalPointDivPos; 
+    private Vector3 originalPointDivScale; 
+
+    private void Start()
+    {
+        if (pointDiv != null) 
+        {
+            originalPointDivPos = pointDiv.localPosition;
+            originalPointDivScale = pointDiv.localScale; // Sahnede ne ayarladıysan onu kaydeder
+            
+            if (scoreText != null) scoreText.text = ""; 
+        }
+    }
+
+    private void OnEnable()
+    {
+        ScoreManager.OnScoreUpdated += UpdateScoreUI;
+    }
+
+    private void OnDisable()
+    {
+        ScoreManager.OnScoreUpdated -= UpdateScoreUI;
+    }
 
     public void GameStateChanged(EGameState newState)
     {
@@ -32,4 +61,52 @@ public class UIManager : MonoBehaviour, IGameStateListener
         }
     }
 
+    private void UpdateScoreUI(int totalScore, int scoreChange)
+    {
+        if (scoreText == null || pointDiv == null) return;
+
+        if (totalScore == 0 && scoreChange == 0)
+        {
+            scoreText.text = "";
+            return;
+        }
+        else
+        {
+            scoreText.text = totalScore.ToString();
+        }
+
+        LeanTween.cancel(pointDiv.gameObject);
+        pointDiv.localPosition = originalPointDivPos;
+        pointDiv.localScale = originalPointDivScale; // Vector3.one YERİNE KENDİ BOYUTU!
+
+        if (scoreChange > 0)
+        {
+            // Orijinal boyutun %30'u kadar büyüsün
+            Vector3 targetScale = originalPointDivScale * 1.3f; 
+            
+            LeanTween.scale(pointDiv.gameObject, targetScale, 0.12f)
+                .setEase(LeanTweenType.easeOutBack)
+                .setOnComplete(() =>
+                {
+                    if (pointDiv != null)
+                    {
+                        LeanTween.scale(pointDiv.gameObject, originalPointDivScale, 0.12f)
+                            .setEase(LeanTweenType.easeInSine);
+                    }
+                });
+        }
+        else if (scoreChange < 0)
+        {
+            LeanTween.moveLocalX(pointDiv.gameObject, originalPointDivPos.x + 15f, 0.2f).setEasePunch();
+            
+            LeanTween.cancel(scoreText.gameObject); 
+            scoreText.color = Color.white; 
+
+            LeanTween.value(scoreText.gameObject, Color.white, Color.red, 0.12f)
+                .setLoopPingPong(1)
+                .setOnUpdate((Color c) => {
+                    if (scoreText != null) scoreText.color = c;
+                });
+        }
+    }
 }

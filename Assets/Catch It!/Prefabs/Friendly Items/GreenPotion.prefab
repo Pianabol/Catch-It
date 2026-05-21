@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FriendlyItem
   itemType: 1
+  scoreValue: -20
   rb: {fileID: 8864713803456662125}
   col: {fileID: 3976642079591835149}
   icon: {fileID: 0}

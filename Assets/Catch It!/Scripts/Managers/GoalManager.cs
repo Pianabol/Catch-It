@@ -130,7 +130,31 @@ public class GoalManager : MonoBehaviour
         return !goal.isCompleted;
     }
 
-    public void ApplyPenalty()
+#region AI Support for player
+    public Item GetUrgentMissingItem()
+    {
+        List<GoalData> incompleteGoals = new List<GoalData>(); 
+        
+        foreach (var goal in activeGoals)
+        {
+            if (!goal.isCompleted)
+            {
+                incompleteGoals.Add(goal);
+            }
+        }
+
+        // Eğer eksik hedef varsa, rastgele birini seçip gönder
+        if (incompleteGoals.Count > 0)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, incompleteGoals.Count);
+            return incompleteGoals[randomIndex].itemPrefab; 
+        }
+
+        return null; 
+    }
+#endregion
+
+    public void ApplyPenalty(Item penaltyItem)
     {
         if (Shield.IsActive)
         {
@@ -146,6 +170,11 @@ public class GoalManager : MonoBehaviour
                 OnGoalUpdated?.Invoke(goal);
             }
         }
+        if (penaltyItem != null && ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.ProcessItemScore(penaltyItem.ScoreValue);
+        }
+        
         Debug.Log("<color=yellow>  Ceza! Aktif hedeflerin tamamlanma şartı +1 arttı!</color>");
     }
 

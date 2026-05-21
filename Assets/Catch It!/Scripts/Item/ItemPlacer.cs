@@ -12,7 +12,7 @@ public class ItemPlacer : MonoBehaviour
 
     [Header(" Settings ")]
     [SerializeField] private BoxCollider spawnArea;
-    [SerializeField] private float levelDuration = 90f;
+    // levelDuration'ı Level scriptinden alacaz.
 
     [Header(" Fruit Ninja Tempo Settings ")]
     [SerializeField] private float minWaveDelay = 1.5f;
@@ -23,12 +23,27 @@ public class ItemPlacer : MonoBehaviour
 
     [Header(" Data ")]
     private Item[] items; 
-
     private List<Item> itemsToSpawnList = new List<Item>();
+    
+    private float currentLevelDuration; 
 
     public Item[] GetItems()
     {
         return GetComponentsInChildren<Item>().Where(x => x.gameObject.activeInHierarchy).ToArray();
+    }
+    private void OnEnable()
+    {
+        LevelManager.levelSpawned += OnLevelSpawned;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.levelSpawned -= OnLevelSpawned;
+    }
+
+    private void OnLevelSpawned(Level spawnedLevel)
+    {
+        currentLevelDuration = spawnedLevel.Duration;
     }
 
     [Button]
@@ -64,12 +79,12 @@ public class ItemPlacer : MonoBehaviour
         if (itemsToSpawnList.Count == 0) yield break;
 
         int currentIndex = 0;
+        float elapsedTime = 0f;
 
-        // Torbadaki virüsler bitene kadar dalga dalga fırlatmaya devam et
-        while (currentIndex < itemsToSpawnList.Count)
+        while (elapsedTime < currentLevelDuration) 
         {
             int waveSize = Random.Range(minItemsPerWave, maxItemsPerWave + 1);
-            int trapIndex = Random.Range(0, waveSize); // Bu dalgadaki tuzak sırası
+            int trapIndex = Random.Range(0, waveSize);
 
             for (int i = 0; i < waveSize; i++)
             {
@@ -82,8 +97,26 @@ public class ItemPlacer : MonoBehaviour
                     }
                     else
                     {
-                        if (currentIndex < itemsToSpawnList.Count)
+                        bool isPanicTime = (currentLevelDuration - elapsedTime) <= 15f;
+                        Item urgentItem = null;
+
+                        if (isPanicTime)
                         {
+                            urgentItem = GoalManager.Instance.GetUrgentMissingItem();
+                        }
+
+                        if (urgentItem != null)
+                        {
+                            SpawnSingleItem(urgentItem);
+                        }
+                        else
+                        {
+                            if (currentIndex >= itemsToSpawnList.Count)
+                            {
+                                PrepareSpawnList();
+                                currentIndex = 0;
+                            }
+
                             Item prefab = itemsToSpawnList[currentIndex];
                             
                             if (GoalManager.Instance.ShouldSpawn(prefab))
@@ -91,7 +124,7 @@ public class ItemPlacer : MonoBehaviour
                                 SpawnSingleItem(prefab);
                             }
                             
-                            currentIndex++;
+                            currentIndex++; 
                         }
                     }
                 }
@@ -101,6 +134,8 @@ public class ItemPlacer : MonoBehaviour
 
             float nextWaveWait = Random.Range(minWaveDelay, maxWaveDelay);
             yield return new WaitForSeconds(nextWaveWait);
+
+            elapsedTime += nextWaveWait + (waveSize * microDelayBetweenItems);
         }
     }
 

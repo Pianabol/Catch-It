@@ -12,6 +12,10 @@ public class Item : MonoBehaviour
     public EItemType itemType;
     
     public int PrefabID { get; set; } 
+
+    [Tooltip("Virüsler için pozitif (10, 20), Dost haplar için negatif (-10, -50) girin.")]
+    [SerializeField] private int scoreValue = 10;
+    public int ScoreValue => scoreValue;
     /*
     private static readonly int Color1ID = Shader.PropertyToID("_Color_1");
     private static readonly int Color2ID = Shader.PropertyToID("_Color_2");
@@ -146,6 +150,12 @@ public class Item : MonoBehaviour
         {
             isDead = true; 
             Debug.Log($"<color=green>3. [ÖLÜM ONAYI] {gameObject.name} tam şu an öldü. Goal Manager'a tek sinyal gidiyor.</color>");
+
+            if (ScoreManager.Instance != null)
+            {
+                ScoreManager.Instance.ProcessItemScore(scoreValue);
+            }
+            
             return true;   
         }
         else

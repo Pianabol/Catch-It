@@ -70,7 +70,6 @@ MonoBehaviour:
   - {fileID: 8032103731759206972, guid: ea7d6a58266d94f79b0e6430827a4471, type: 3}
   - {fileID: 1687552471706385669, guid: 6d7914cdf6ac34d329cc6fd8ae8ebc3b, type: 3}
   spawnArea: {fileID: 4894427674328628101}
-  levelDuration: 90
   minWaveDelay: 1.5
   maxWaveDelay: 3
   minItemsPerWave: 3
@@ -143,8 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level
   itemPlacer: {fileID: 3508594251306889625}
-  friendSpawner: {fileID: 0}
-  duration: 60
+  duration: 63
   levelGoals:
   - itemPrefab: {fileID: -3105887985005397771, guid: 079c5c3bf645546cb9f0328b84bcf555, type: 3}
     targetAmount: 5

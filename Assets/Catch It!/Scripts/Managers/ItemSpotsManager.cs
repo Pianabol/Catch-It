@@ -47,7 +47,7 @@ public class ItemSpotsManager : MonoBehaviour
                 Debug.Log("<color=red>  Ceza: Goal Card +=1</color>");
                 if (GoalManager.Instance != null)
                 {
-                    GoalManager.Instance.ApplyPenalty();
+                    GoalManager.Instance.ApplyPenalty(item);
                 }
             }
             else

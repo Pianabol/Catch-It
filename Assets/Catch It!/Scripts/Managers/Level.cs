@@ -5,7 +5,6 @@ public class Level : MonoBehaviour
 {
     [Header(" Spawners ")]
     [SerializeField] private ItemPlacer itemPlacer;
-    [SerializeField] private ItemSpawner friendSpawner;
 
     [Header(" Level Goals ")]
     [SerializeField] private int duration;
@@ -16,7 +15,7 @@ public class Level : MonoBehaviour
     public void StartLevel()
     {
         if (itemPlacer != null) itemPlacer.StartSpawning();
-        if (friendSpawner != null) friendSpawner.StartSpawning();
+        // if (friendSpawner != null) friendSpawner.StartSpawning();
         
         Debug.Log("<color=orange>Level: Spawner'lara ateş emri verildi!</color>");
     }
