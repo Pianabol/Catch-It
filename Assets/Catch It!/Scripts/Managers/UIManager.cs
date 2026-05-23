@@ -13,6 +13,10 @@ public class UIManager : MonoBehaviour, IGameStateListener
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private RectTransform pointDiv;
 
+    [Header(" End Game Score Texts ")]
+    [SerializeField] private TextMeshProUGUI levelCompleteScoreText;
+    [SerializeField] private TextMeshProUGUI gameOverScoreText;
+
     private Vector3 originalPointDivPos; 
     private Vector3 originalPointDivScale; 
 
@@ -54,9 +58,17 @@ public class UIManager : MonoBehaviour, IGameStateListener
                 break;
             case EGameState.LEVELCOMPLETE:
                 levelCompletePanel.SetActive(true);
+                if (ScoreManager.Instance != null && levelCompleteScoreText != null)
+                {
+                    levelCompleteScoreText.text = "Score : " + ScoreManager.Instance.CurrentScore.ToString();
+                }
                 break;
             case EGameState.GAMEOVER:
                 gameOverPanel.SetActive(true);
+                if (ScoreManager.Instance != null && gameOverScoreText != null)
+                {
+                    gameOverScoreText.text = "Score : " + ScoreManager.Instance.CurrentScore.ToString();
+                }
                 break;
         }
     }

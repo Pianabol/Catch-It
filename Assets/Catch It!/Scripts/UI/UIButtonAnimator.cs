@@ -1,48 +1,53 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(RectTransform))] 
 public class UIButtonAnimator : MonoBehaviour
 {
-    [Header(" Animation Settings ")]
-    [SerializeField] private float bobbingAmount = 15f; 
-    [SerializeField] private float bobbingSpeed = 0.75f; 
-
-    [SerializeField] private float scaleAmount = 1.1f; 
-    [SerializeField] private float scaleSpeed = 0.6f; 
-
     private RectTransform rectTransform;
-    private float originalY;
+    private Vector3 originalScale;
+
+    [Header(" Animation Settings ")]
+    [Tooltip("Şişme (Swell) animasyonunun süresi (HC için 0.15f idealdir)")]
+    [SerializeField] private float animationDuration = 0.15f;
+
+    [Tooltip("Orijinal boyutun ne kadar üzerine çıksın? (örn: 1.15f = %15 büyür)")]
+    [SerializeField] private float swellScaleMultiplier = 1.15f; // HC Juice oranı
+
+    [Tooltip("Orijinal boyuta geri dönme süresi")]
+    [SerializeField] private float returnDuration = 0.12f;
+
+    [Header(" Actions after Animation (GELİŞMİŞ) ")]
+    [Tooltip("Animasyon bittikten (şişip-indikten) hemen sonra yapılacak işlem (Örn: Sahneleri yükle)")]
+    [SerializeField] private UnityEvent onAnimationComplete;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        originalY = rectTransform.anchoredPosition.y;
-        LeanTween.cancel(gameObject);
-        rectTransform.localScale = Vector3.one;
-
-        // 1. Bobbing (Yukarı-Aşağı Hareket)
-        // anchoredPosition.y kullanarak UI sisteminin kafasını karıştırmadan hareket ettiriyoruz
-        LeanTween.moveY(rectTransform, originalY + bobbingAmount, bobbingSpeed)
-            .setEase(LeanTweenType.easeInOutQuad)
-            .setLoopPingPong(-1); // -1 sonsuz döngü demektir!
-
-        // 2. Pulse (Nefes Alma / Büyüyüp Küçülme)
-        LeanTween.scale(gameObject, Vector3.one * scaleAmount, scaleSpeed)
-            .setEase(LeanTweenType.easeInOutSine)
-            .setLoopPingPong(-1);
+        originalScale = rectTransform.localScale;
     }
 
-    private void OnDisable()
+    public void AnimateClick()
     {
-        // Panel veya buton kapandığında LeanTween'i durdur ki arka planda hafıza yemesin (Memory Leak koruması)
-        LeanTween.cancel(gameObject);
-        
-        // Pozisyonu ve boyutu orijinal haline geri getir
-        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, originalY);
-        rectTransform.localScale = Vector3.one;
+        LeanTween.cancel(rectTransform.gameObject);
+
+        LeanTween.scale(rectTransform.gameObject, originalScale * swellScaleMultiplier, animationDuration)
+            .setEase(LeanTweenType.easeOutBack) // Hafif sekerek (Juice) büyüsün
+            .setOnComplete(() =>
+            {
+                // Obje imha olmadıysa devam et (Safety Check)
+                if (rectTransform != null)
+                {
+                    LeanTween.scale(rectTransform.gameObject, originalScale, returnDuration)
+                        .setEase(LeanTweenType.easeInSine) // Yumuşak bir geçiş
+                        .setOnComplete(() => {
+                            onAnimationComplete?.Invoke();
+                        });
+                }
+            });
     }
 }

@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: 311cc744bd9c5ba4aaa4de2c9404cef2
-AssetOrigin:
-  serializedVersion: 1
-  productId: 375832
-  packageName: Hyper Casual UI Pack
-  packageVersion: 1.0
-  assetPath: Assets/Hyper_Casual_UI/Sprites/Panel_Sprites/HUD Pannel (1).png
-  uploadId: 906102
+guid: 1a3915a9b2b2f4338b1375c88d9cafce
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

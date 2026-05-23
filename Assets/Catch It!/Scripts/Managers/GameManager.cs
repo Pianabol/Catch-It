@@ -40,9 +40,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool IsGame()
+    {
+        return gameState == EGameState.GAME;
+    }
+
     public void StartGame()
     {
+        if (ScoreManager.Instance != null) ScoreManager.Instance.ResetScore();
+        
         SetGameState(EGameState.GAME);
+    }
+
+    public void HomeButtonCallBack()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void NextButtonCallBack()
@@ -54,12 +66,4 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-
-    public bool IsGame()
-    {
-        return gameState == EGameState.GAME;
-    }
-
-
-    
 }

@@ -13,6 +13,7 @@ public class ScoreManager : MonoBehaviour
     [Header(" Score Data ")]
     private int currentScore;
     private int currentCombo = 1;
+    public int CurrentScore => currentScore;
     
     [Header(" Combo Settings ")]
     [Tooltip("Komboyu devam ettirmek için geçmesi gereken maksimum süre")]
@@ -82,5 +83,12 @@ public class ScoreManager : MonoBehaviour
         }
         currentCombo = 1;
         comboTimer = 0f;
+    }
+     public void ResetScore()
+    {
+        currentScore = 0;
+        ResetCombo();
+        
+        OnScoreUpdated?.Invoke(currentScore, 0);
     }
 }
