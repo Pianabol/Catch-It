@@ -9,10 +9,6 @@ public class FriendlyItem : Item
 
     public override bool TakeDamage()
     {
-        // İleride burayı Player'ın canını düşürecek şekilde güncelleyeceğiz
-        Debug.LogWarning("⚠️ DİKKAT! DOST HAPA TIKLADIN! CEZA ALDIN!");
-
-        // Dost objeler (Haplar) tıklandığı an tek seferde patlasın ve havuza dönsün
         return true; 
     }
 }

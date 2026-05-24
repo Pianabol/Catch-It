@@ -15,9 +15,6 @@ public class Level : MonoBehaviour
     public void StartLevel()
     {
         if (itemPlacer != null) itemPlacer.StartSpawning();
-        // if (friendSpawner != null) friendSpawner.StartSpawning();
-        
-        Debug.Log("<color=orange>Level: Spawner'lara ateş emri verildi!</color>");
     }
 
     public Item[] GetItems()

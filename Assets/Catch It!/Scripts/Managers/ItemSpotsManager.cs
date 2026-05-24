@@ -25,6 +25,14 @@ public class ItemSpotsManager : MonoBehaviour
 
     private void HandleItemClicked(Item item)
     {
+        if (AudioManager.Instance != null)
+        {
+            if (item is FriendlyItem)
+                AudioManager.Instance.PlayPuffSound();
+            else
+                AudioManager.Instance.PlaySquishSound();
+        }
+
         bool isDead = item.TakeDamage();
 
         if (isDead)
@@ -43,8 +51,6 @@ public class ItemSpotsManager : MonoBehaviour
 
             if (item is FriendlyItem)
             {
-                // Dost hapsa ceza ver
-                Debug.Log("<color=red>  Ceza: Goal Card +=1</color>");
                 if (GoalManager.Instance != null)
                 {
                     GoalManager.Instance.ApplyPenalty(item);
@@ -59,10 +65,6 @@ public class ItemSpotsManager : MonoBehaviour
             }
 
             item.ReturnToPool();
-        }
-        else
-        {
-            // Virüs ölmediyse yapılacaklar (Örn: 2 HP'li virüslerin ilk hasarı)
         }
     }
 }

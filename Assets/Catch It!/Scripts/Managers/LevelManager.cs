@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour, IGameStateListener
     public Item[] Items => currentLevel.GetItems();
     [Header(" Settings ")]
     private Level currentLevel; 
+    public int CurrentLevelNum => levelIndex + 1;
 
     [Header(" Actions ")]
     public static Action<Level> levelSpawned;
@@ -30,10 +31,6 @@ public class LevelManager : MonoBehaviour, IGameStateListener
         LoadData();
     }
 
-    void Start()
-    {
-        
-    }
     
     private void SpawnLevel()
     {
@@ -41,7 +38,6 @@ public class LevelManager : MonoBehaviour, IGameStateListener
 
         if(levels.Length <= 0)
         {
-            Debug.LogError("LevelManager: No levels assigned in the inspector!");
             return;
         }
 
@@ -50,7 +46,6 @@ public class LevelManager : MonoBehaviour, IGameStateListener
         
         levelSpawned?.Invoke(currentLevel);
         currentLevel.StartLevel();
-
     }
 
     private void LoadData()

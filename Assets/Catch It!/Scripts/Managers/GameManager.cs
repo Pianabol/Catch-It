@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     private EGameState gameState;
 
+    public static bool startInGameMode = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -23,7 +25,15 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        SetGameState(EGameState.MENU);
+        if (startInGameMode)
+        {
+            startInGameMode = false; 
+            StartGame();
+        }
+        else
+        {
+            SetGameState(EGameState.MENU);
+        }
     }
 
     public void SetGameState(EGameState newState)
@@ -54,16 +64,53 @@ public class GameManager : MonoBehaviour
 
     public void HomeButtonCallBack()
     {
-        SceneManager.LoadScene(0);
+        if (CanvasFader.Instance != null)
+        {
+            CanvasFader.Instance.FadeOut(() => {
+                startInGameMode = false; 
+                SceneManager.LoadScene(0);
+            });
+        }
+        else
+        {
+            startInGameMode = false;
+            SceneManager.LoadScene(0);
+        }
     }
 
     public void NextButtonCallBack()
     {
-        SceneManager.LoadScene(0);
+        int nextLevelIndex = PlayerPrefs.GetInt("CurrentLevel", 0) + 1;
+        PlayerPrefs.SetInt("CurrentLevel", nextLevelIndex);
+        PlayerPrefs.Save();
+
+        if (CanvasFader.Instance != null)
+        {
+            CanvasFader.Instance.FadeOut(() => {
+                startInGameMode = true;  
+                SceneManager.LoadScene(0);
+            });
+        }
+        else
+        {
+            startInGameMode = true;
+            SceneManager.LoadScene(0);
+        }
     }
 
     public void RetryButtonCallBack()
     {
-        SceneManager.LoadScene(0);
+        if (CanvasFader.Instance != null)
+        {
+            CanvasFader.Instance.FadeOut(() => {
+                startInGameMode = true;  
+                SceneManager.LoadScene(0);
+            });
+        }
+        else
+        {
+            startInGameMode = true;
+            SceneManager.LoadScene(0);
+        }
     }
 }

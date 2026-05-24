@@ -135,12 +135,9 @@ public class Item : MonoBehaviour
     }
 
     public virtual bool TakeDamage()
-    {
-        Debug.Log($"<color=orange>1. [TETİK] {gameObject.name} vuruldu! isDead kalkanı şu an: {isDead}</color>");
-        
+    {   
         if (isDead) 
         {
-            Debug.Log($"<color=red>2. [KORUMA BAŞARILI] {gameObject.name} zaten ölmüş, ikinci vuruş engellendi!</color>");
             return false; 
         }
 
@@ -149,7 +146,6 @@ public class Item : MonoBehaviour
         if (currentHealth <= 0)
         {
             isDead = true; 
-            Debug.Log($"<color=green>3. [ÖLÜM ONAYI] {gameObject.name} tam şu an öldü. Goal Manager'a tek sinyal gidiyor.</color>");
 
             if (ScoreManager.Instance != null)
             {
@@ -243,7 +239,7 @@ public class Item : MonoBehaviour
         {
             if (Random.value <= wallExplosionProbability)
             {
-                isDead = true; 
+                currentHealth = 1; 
                 InputManager.itemClicked?.Invoke(this); 
             }
             else
@@ -253,30 +249,22 @@ public class Item : MonoBehaviour
                 reflectedVelocity.y = 0; 
 
                 // 1. AÇIYI KISMA (Dikey sekmeyi törpüleme):
-                // Z eksenindeki yansıma hızını %50 oranında düşürüyoruz.
-                // Böylece dikine (ping-pong gibi) sekmek yerine daha yatay ve hedefe yönelik bir açı kazanır.
                 reflectedVelocity.z *= 0.5f; 
 
                 // 2. KESİN SIKIŞMA ÖNLEYİCİ (-X Yönü Garantisi):
-                // Eğer virüs sola doğru yeterince hızlı gitmiyorsa (veya sağa doğru sekmeye çalışıyorsa)
                 if (reflectedVelocity.x > -5f)
                 {
-                    // ŞLAK! Onu zorla ve rastgele bir güçle sola (-X yönüne) doğru ateşle.
-                    // (Değerleri oyunun hızına göre 5f-8f veya 6f-10f yapabilirsin)
                     reflectedVelocity.x = -Random.Range(5f, 8f);
                 }
 
                 // 3. PARALEL KAYMA ÖNLEYİCİ (Z için minimum güç):
-                // Çarptığı duvarın yönünü bul (Üst duvar eksi, alt duvar artı verir)
                 float wallDirectionZ = Mathf.Sign(contact.normal.z);
                 
-                // Eğer Z hızı çok düşüp duvara paralel kaymaya çalışırsa, onu hafifçe duvardan it
                 if (Mathf.Abs(reflectedVelocity.z) < 2f) 
                 {
                     reflectedVelocity.z = wallDirectionZ * Random.Range(2f, 4f);
                 }
 
-                // Hızlandır ve limiti aşarsa kelepçele
                 reflectedVelocity *= bounceSpeedMultiplier;
                 if (reflectedVelocity.magnitude > maxBounceSpeed)
                 {
@@ -285,7 +273,6 @@ public class Item : MonoBehaviour
 
                 rb.linearVelocity = reflectedVelocity;
 
-                // Dönüş Animasyonu (Aynı)
                 LeanTween.cancel(turnTweenId);
                 turnTweenId = LeanTween.value(gameObject, visualForwardDirection, reflectedVelocity.normalized, turnSmoothDuration)
                     .setEase(LeanTweenType.easeOutSine) 

@@ -10,7 +10,6 @@ public class FirstAidKit : PowerUp
     {
         if (killArea == null) 
         {
-            Debug.LogWarning("<color=yellow>FirstAidKit: Kill Area (Küp) atanmamış!</color>");
             return;
         }
 
@@ -53,6 +52,5 @@ public class FirstAidKit : PowerUp
             }
         }
         
-        Debug.Log($"<color=green>First Aid Kit: Sadece düşman olan {destroyedCount} virüs temizlendi, dostlar güvende!</color>");
     }
 }

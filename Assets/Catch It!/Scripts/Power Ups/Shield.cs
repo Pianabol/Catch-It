@@ -15,14 +15,11 @@ public class Shield : PowerUp
         }
 
         IsActive = true;
-        Debug.Log($"<color=cyan>Shield Aktif! {duration} saniye boyunca ceza almayacaksın!</color>");
 
-        // TODO: İleride ekranın kenarlarına mavi bir parlama veya karakterin etrafına hale efekti ekleyebilirsin.
 
         LeanTween.delayedCall(gameObject, duration, () =>
         {
             IsActive = false;
-            Debug.Log("<color=orange>Shield süresi bitti. Artık korumasızsın!</color>");
         });
     }
 }

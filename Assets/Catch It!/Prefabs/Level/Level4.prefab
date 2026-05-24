@@ -72,7 +72,7 @@ MonoBehaviour:
   spawnArea: {fileID: 4894427674328628101}
   minWaveDelay: 1.5
   maxWaveDelay: 3
-  minItemsPerWave: 3
+  minItemsPerWave: 2
   maxItemsPerWave: 6
   microDelayBetweenItems: 0.1
 --- !u!65 &4894427674328628101
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 4585765221936907209}
   - component: {fileID: 3489589774823773762}
   m_Layer: 0
-  m_Name: Level
+  m_Name: Level4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,17 +142,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level
   itemPlacer: {fileID: 3508594251306889625}
-  duration: 75
+  duration: 60
   levelGoals:
-  - itemPrefab: {fileID: -3105887985005397771, guid: 079c5c3bf645546cb9f0328b84bcf555, type: 3}
-    targetAmount: 3
+  - itemPrefab: {fileID: 66511249161218117, guid: 19cf39672d89e4c8a82e6c4700b93491, type: 3}
+    targetAmount: 5
     currentAmount: 0
     isCompleted: 0
   - itemPrefab: {fileID: 1082750620328841084, guid: d47521685be574cddb0f6f4592eca994, type: 3}
-    targetAmount: 3
+    targetAmount: 5
     currentAmount: 0
     isCompleted: 0
-  - itemPrefab: {fileID: -7875977477062105681, guid: 100c5af7b40c1474fafecab799063798, type: 3}
-    targetAmount: 3
+  - itemPrefab: {fileID: -3546077563129867251, guid: ad9dac368fb8d4e0bb4d862f10e4820e, type: 3}
+    targetAmount: 5
+    currentAmount: 0
+    isCompleted: 0
+  - itemPrefab: {fileID: -8152185358524028672, guid: 784020e977ded4cff923d14f3da6690d, type: 3}
+    targetAmount: 5
     currentAmount: 0
     isCompleted: 0

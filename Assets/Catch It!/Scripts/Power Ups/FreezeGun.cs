@@ -49,8 +49,6 @@ public class FreezeGun : PowerUp
 
     private void FireFreezeBeam()
     {
-        Debug.Log("<color=cyan>PEW! Freeze Gun Ateş Etti!</color>");
-
         if (shootingPoint != null && freezeEffectPrefab != null)
         {
             // Efekti tam namlunun ucunda, namlunun baktığı açıya göre oluştur
@@ -62,9 +60,14 @@ public class FreezeGun : PowerUp
         }
         else
         {
-            Debug.LogWarning("FreezeGun: Shooting Point veya Effect Prefab eksik!");
+            //Debug
         }
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayPowerUpSound("freeze");
+        }
+        
         if (TimerManager.Instance != null)
         {
             TimerManager.Instance.FreezeTimer(5f);

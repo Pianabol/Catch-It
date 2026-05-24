@@ -48,7 +48,6 @@ public class TimerManager : MonoBehaviour, IGameStateListener
         if (remainingTime <= 0)
         {
             TimerEnded();
-            Debug.Log("<color=red>TimerManager: Süre doldu, oyun bitti!</color>");
         }
     }
 
@@ -97,15 +96,11 @@ public class TimerManager : MonoBehaviour, IGameStateListener
         Color originalColor = Color.white; // Varsayılan rengin beyaz olduğunu varsayıyoruz
         timerText.color = new Color(0.5f, 0.8f, 1f); 
 
-        // TODO: İleride Container'a buz çatlama efekti (Image/Sprite) falan da buraya eklenecek.
-        Debug.Log($"<color=cyan>TimerManager: Zaman {duration} saniyeliğine BUZ TUTTU!</color>");
-
         yield return new WaitForSeconds(duration);
 
         // Buzu çöz, her şeyi eski haline getir ve zamanı tekrar başlat
         timerText.color = originalColor;
         StartTimer();
-        Debug.Log("<color=orange>TimerManager: Buz çözüldü, zaman tekrar akıyor...</color>");
     }
 
     #endregion

@@ -35,10 +35,7 @@ public class InputManager : MonoBehaviour
         
         if (hit.collider == null) return false;
         if (!hit.collider.TryGetComponent(out PowerUp powerUp)) return false;
-        
-        
-        Debug.Log($"<color=yellow>[Raycast Hit]</color> PowerUp Objesi: <b>{hit.collider.name}</b> | Enum Tipi: <color=cyan>{powerUp.Type}</color>");
-        
+    
         powerupClicked?.Invoke(powerUp);
         return true; 
     }
@@ -54,10 +51,6 @@ public class InputManager : MonoBehaviour
         {
             return;
         }
-
-        Debug.Log("Hit: " + hit.collider.name);
         itemClicked?.Invoke(item);
     }
-
-
 }

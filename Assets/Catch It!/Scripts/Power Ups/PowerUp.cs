@@ -52,15 +52,27 @@ public abstract class PowerUp : MonoBehaviour
         if (remainingUses > 0)
         {
             remainingUses--;
-            Debug.Log($"<color=cyan>{type} kullanıldı. Kalan hak: {remainingUses}</color>");
             UpdateVisuals(remainingUses);
+
+            if (AudioManager.Instance != null)
+            {
+                if (type == EPowerUpType.FirstAidKit)
+                    AudioManager.Instance.PlayPowerUpSound("heal");
+                else if (type == EPowerUpType.Shield)
+                    AudioManager.Instance.PlayPowerUpSound("shield");
+            }
+
 
             PlayClickAnimation();
             Activate();
         }
         else
         {
-            Debug.Log($"<color=red>{type} hakkı bitti!</color>");
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayPuffSound();
+            }
+            
             PlayEmptyAnimation(); 
         }
     }

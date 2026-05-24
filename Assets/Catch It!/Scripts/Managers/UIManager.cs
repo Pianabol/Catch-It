@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour, IGameStateListener
     [Header(" Score UI Elements ")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private RectTransform pointDiv;
+    [SerializeField] private TextMeshProUGUI levelPopupText;
 
     [Header(" End Game Score Texts ")]
     [SerializeField] private TextMeshProUGUI levelCompleteScoreText;
@@ -55,6 +56,7 @@ public class UIManager : MonoBehaviour, IGameStateListener
                 break;
             case EGameState.GAME:
                 gamePanel.SetActive(true);
+                ShowLevelPopup();
                 break;
             case EGameState.LEVELCOMPLETE:
                 levelCompletePanel.SetActive(true);
@@ -62,6 +64,7 @@ public class UIManager : MonoBehaviour, IGameStateListener
                 {
                     levelCompleteScoreText.text = "Score : " + ScoreManager.Instance.CurrentScore.ToString();
                 }
+                if (AudioManager.Instance != null) AudioManager.Instance.PlayLevelCompleteSound();
                 break;
             case EGameState.GAMEOVER:
                 gameOverPanel.SetActive(true);
@@ -69,6 +72,7 @@ public class UIManager : MonoBehaviour, IGameStateListener
                 {
                     gameOverScoreText.text = "Score : " + ScoreManager.Instance.CurrentScore.ToString();
                 }
+                if (AudioManager.Instance != null) AudioManager.Instance.PlayGameOverSound();
                 break;
         }
     }
@@ -120,5 +124,28 @@ public class UIManager : MonoBehaviour, IGameStateListener
                     if (scoreText != null) scoreText.color = c;
                 });
         }
+    }
+
+    private void ShowLevelPopup()
+    {
+        if (levelPopupText == null || LevelManager.Instance == null) return;
+
+        levelPopupText.text = "LEVEL " + LevelManager.Instance.CurrentLevelNum.ToString();
+
+        levelPopupText.gameObject.SetActive(true);
+        levelPopupText.transform.localScale = Vector3.zero;
+
+        LeanTween.scale(levelPopupText.gameObject, Vector3.one, 0.4f)
+            .setEase(LeanTweenType.easeOutBack) // Jöle gibi şişer
+            .setOnComplete(() =>
+            {
+                LeanTween.scale(levelPopupText.gameObject, Vector3.zero, 0.3f)
+                    .setDelay(1.2f) 
+                    .setEase(LeanTweenType.easeInBack)
+                    .setOnComplete(() => 
+                    {
+                        levelPopupText.gameObject.SetActive(false);
+                    });
+            });
     }
 }

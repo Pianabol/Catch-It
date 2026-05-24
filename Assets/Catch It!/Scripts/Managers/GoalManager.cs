@@ -53,8 +53,6 @@ public class GoalManager : MonoBehaviour
     {
         // Level doğduğu anda içindeki hedefleri çek!
         SetLevelGoals(spawnedLevel.GetGoals());
-        Debug.Log($"<color=green> GoalManager: Yeni bölüm sinyali alındı, hedefler yüklendi.</color>");
-
         GenerateGoalCards();
     }
 
@@ -93,8 +91,6 @@ public class GoalManager : MonoBehaviour
                 targetAmount = goal.targetAmount 
             });
         }
-        
-        Debug.Log("Bölüm hedefleri LevelManager'dan başarıyla yüklendi!");
     }
 
     public void UpdateGoalProgress(Item item)
@@ -107,15 +103,11 @@ public class GoalManager : MonoBehaviour
             goal.currentAmount++;
             
             OnGoalUpdated?.Invoke(goal);
-            Debug.Log($"<color=cyan> Goal Card Güncel Veri: {goal.itemPrefab.name} -> Kalan: {goal.RemainingAmount}</color>");
 
             if (goal.currentAmount >= goal.targetAmount)
             {
                 goal.isCompleted = true;
-                
                 OnGoalCompleted?.Invoke(goal);
-                Debug.Log($"<color=green> HEDEF TAMAMLANDI: {goal.itemPrefab.name}</color>");
-
                 CheckLevelWinCondition();
             }
         }
@@ -158,7 +150,6 @@ public class GoalManager : MonoBehaviour
     {
         if (Shield.IsActive)
         {
-            Debug.Log("<color=cyan>Kalkan devrede! Ceza bloklandı, hedef artmadı.</color>");
             return; 
         }
 
@@ -174,8 +165,6 @@ public class GoalManager : MonoBehaviour
         {
             ScoreManager.Instance.ProcessItemScore(penaltyItem.ScoreValue);
         }
-        
-        Debug.Log("<color=yellow>  Ceza! Aktif hedeflerin tamamlanma şartı +1 arttı!</color>");
     }
 
     private void CheckLevelWinCondition()
@@ -183,9 +172,7 @@ public class GoalManager : MonoBehaviour
         bool allDone = activeGoals.All(g => g.isCompleted);
         if (allDone)
         {
-            Debug.Log("<color=magenta>  BÜTÜN HEDEFLER BİTTİ! BÖLÜM GEÇİLDİ!</color>");
-            OnLevelCompleted?.Invoke(); 
-
+            OnLevelCompleted?.Invoke();
             GameManager.Instance.SetGameState(EGameState.LEVELCOMPLETE);
         }
     }
